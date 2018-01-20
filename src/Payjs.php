@@ -2,6 +2,8 @@
 
 namespace Payjs;
 
+use GuzzleHttp\Client;
+
 class Payjs
 {
     private $AK, $SK, $error;
@@ -179,7 +181,7 @@ class Payjs
             if (!isset($data['callback_url']) || !$data['callback_url']) unset($data['callback_url']);
         }
         if (!isset($data['sign']) || !$data['sign']) $data['sign'] = $this->sign($data);
-        $ql = \QL\QueryList::post($url, $data);
+        $ql = \QL\QueryList::post($url, $data, array('allow_redirects' => false)); //禁止跳转
         $r = $ql->getHtml();
         if (!$r) {
             $this->error = "执行出现错误";
