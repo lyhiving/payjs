@@ -1,0 +1,20 @@
+{
+    "name": "lyhiving/payjs",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "lyhiving",
+            "email": "lyhiving@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "lyhiving/snoopy": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Payjs\\": "/src"
+        }
+    }
+}
