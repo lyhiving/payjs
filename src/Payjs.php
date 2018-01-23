@@ -83,7 +83,7 @@ class Payjs
      * @param integer $total_fee 费用，单位分
      * @param string $body  订单标题
      * @param string $callback_url  回跳地址，暂时不支持，如果填写会出错。以后支持的话就是支付完成要跳转的目标地址
-     * @return void 返回跳转的代码，直接引用即可
+     * @return void 返回跳转的代码，直接引用即可。如果返回的是false，那么就用error来判断错误
      */
     public function cashier($orderid = null, $total_fee = 1, $body = '订单', $callback_url = '')
     {
@@ -94,7 +94,13 @@ class Payjs
             'out_trade_no' => $orderid,
             'callback_url' => $callback_url,
         );
-        return $this->post($url, $data, false);
+        $r = $this->post($url, $data, false);
+        if($r && strpos($r,'return_msg')){
+            $r = json_decode($r,'true');
+            $this->error = $r['return_msg'];
+            return false;
+        } 
+        return $r;
     }
 
     /**
